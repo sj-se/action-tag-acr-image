@@ -13,8 +13,8 @@ inputs:
   sourceTag:
     description: 'Source tag'
     required: true
-  subscription:
-    description: 'Azure subscription holding the Azure container registry'
+  subscriptionId:
+    description: 'Azure subscription Id holding the Azure container registry'
     required: true
 runs:
   using: "composite"
@@ -26,6 +26,6 @@ runs:
         $repoName = "${{ inputs.repoName }}"
         $sourceTag = "${{ inputs.sourceTag }}"
         $destTag = "${{ inputs.destTag }}"
-        $subscription = "${{ inputs.subscription }}"
+        $subscriptionId = "${{ inputs.subscriptionId }}"
         $fullSourceImage = "${acrName}.azurecr.io/${repoName}:${sourceTag}"
-        az acr import --name ${acrName} --source $fullSourceImage --image ${repoName}:${destTag} --force --subscription $subscription
+        az acr import --name ${acrName} --source $fullSourceImage --image ${repoName}:${destTag} --force --subscription $subscriptionId
