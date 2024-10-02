@@ -22,10 +22,10 @@ runs:
     - name: Tag image
       shell: bash
       run: |
-        $acrName = "${{ inputs.acrName }}"
-        $repoName = "${{ inputs.repoName }}"
-        $sourceTag = "${{ inputs.sourceTag }}"
-        $destTag = "${{ inputs.destTag }}"
-        $subscriptionId = "${{ inputs.subscriptionId }}"
-        $fullSourceImage = "${acrName}.azurecr.io/${repoName}:${sourceTag}"
+        acrName="${{ inputs.acrName }}"
+        repoName="${{ inputs.repoName }}"
+        sourceTag="${{ inputs.sourceTag }}"
+        destTag="${{ inputs.destTag }}"
+        subscriptionId="${{ inputs.subscriptionId }}"
+        fullSourceImage="${acrName}.azurecr.io/${repoName}:${sourceTag}"
         az acr import --name ${acrName} --source $fullSourceImage --image ${repoName}:${destTag} --force --subscription $subscriptionId
