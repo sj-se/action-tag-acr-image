@@ -1,0 +1,31 @@
+name: 'Tag ACR image'
+description: 'Set a new image tag on an existing image in ACR'
+inputs:
+  acrName:
+    description: 'Azure Container Registry name'
+    required: true
+  destTag:
+    description: 'Destination tag'
+    required: true
+  repoName:
+    description: 'Repository name'
+    required: true
+  sourceTag:
+    description: 'Source tag'
+    required: true
+  subscription:
+    description: 'Azure subscription holding the Azure container registry'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Tag image
+      shell: bash
+      run: |
+        $acrName = "${{ inputs.acrName }}"
+        $repoName = "${{ inputs.repoName }}"
+        $sourceTag = "${{ inputs.sourceTag }}"
+        $destTag = "${{ inputs.destTag }}"
+        $subscription = "${{ inputs.subscription }}"
+        $fullSourceImage = "${acrName}.azurecr.io/${repoName}:${sourceTag}"
+        az acr import --name ${acrName} --source $fullSourceImage --image ${repoName}:${destTag} --force --subscription $subscription
